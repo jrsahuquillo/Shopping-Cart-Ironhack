@@ -1,6 +1,8 @@
 require 'pry'
 require 'colorize'
-
+# @shop_products = {item, price} Hash with all avalaible items
+# @cart1 = {item, sum of item in cart} - Hash
+# @cart2 = {item, sum of item to pay with deal aplied} - Hash  
 
 
 class ShoppingCart
@@ -9,7 +11,7 @@ class ShoppingCart
 		@cart2 = {}
 		@shop_products = shop_products
 		@total = 0
-		@bananas_free = 0
+		
 	end
 
 	def add_item_to_cart(item)
@@ -25,7 +27,6 @@ class ShoppingCart
 	end
 
 	def show
-		#binding pry
 
 		apple_deals
 		orange_deals
@@ -51,10 +52,11 @@ class ShoppingCart
 		@cart2.each do |key,value|
 			@total += @shop_products[key]*value 
 		end
-
+		puts "--------------------------------"
 		puts "Total cost is: #{@total}$" .colorize(:green)
 		saved
 		puts "You saved #{@no_deal_total - @total} $ with deals!".colorize(:yellow)
+		puts "\n"
 	end
 
 	def apple_deals #2x1 deal
@@ -81,7 +83,8 @@ class ShoppingCart
 		end		
 	end
 
-	def banana_deals #No deal
+	def banana_deals #1 banana for each 4 grapes
+		
 		#@cart2[:bananas] = @cart1[:bananas]
 		if @cart1[:bananas] > 0
 			@cart2[:bananas] = @cart1[:bananas] - @bananas_free
@@ -90,8 +93,10 @@ class ShoppingCart
 	end
 
 	def grape_deals #1 banana for each 4 grapes
+		@bananas_free = 0
 		if @shop_products.key?(:grapes)
-			puts "Deal: 1 banana free for each 4 grapes"
+			puts"\n"
+			puts "DEAL!!: 1 banana free for each 4 grapes"
 			if @cart1[:grapes] >= 4
 			 	@bananas_free = (@cart1[:grapes] - @cart1[:grapes]%4)/4
 			end
@@ -119,9 +124,6 @@ class Shop
 end
 
 
-
-
-
 shop1 = Shop.new
 shop1.shop_products
 
@@ -135,5 +137,3 @@ cart.add_item_to_cart :watermelons
 
 cart.show
 cart.cost
-
-
