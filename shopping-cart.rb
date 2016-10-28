@@ -9,6 +9,7 @@ class ShoppingCart
 		@cart2 = {}
 		@shop_products = shop_products
 		@total = 0
+		@bananas_free = 0
 	end
 
 	def add_item_to_cart(item)
@@ -81,11 +82,21 @@ class ShoppingCart
 	end
 
 	def banana_deals #No deal
-		@cart2[:bananas] = @cart1[:bananas]
+		#@cart2[:bananas] = @cart1[:bananas]
+		if @cart1[:bananas] > 0
+			@cart2[:bananas] = @cart1[:bananas] - @bananas_free
+
+		end
 	end
 
-	def grape_deals #No deal
-		@cart2[:grapes] = @cart1[:grapes]
+	def grape_deals #1 banana for each 4 grapes
+		if @shop_products.key?(:grapes)
+			puts "Deal: 1 banana free for each 4 grapes"
+			if @cart1[:grapes] >= 4
+			 	@bananas_free = (@cart1[:grapes] - @cart1[:grapes]%4)/4
+			end
+				@cart2[:grapes] = @cart1[:grapes]
+		end
 	end
 
 	def watermelon_deals #No deal
