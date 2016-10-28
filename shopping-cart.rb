@@ -116,19 +116,6 @@ class Shop
 		}	
 	end	
 
-	
-
-	
-=begin
-	def grapes_deals #4 grapes = 1 free banana
-		@cart.each do |key,value|
-			if key == :grapes
-				if value == 
-					@cart[:banana] = 0
-			end
-		end		
-	end
-=end
 end
 
 
