@@ -12,6 +12,7 @@ class ShoppingCart
 		@cart2 = {}
 		@shop_products = shop_products
 		@total = 0
+		@date = Time.now
 		
 	end
 
@@ -105,8 +106,12 @@ class ShoppingCart
 		end
 	end
 
-	def watermelon_deals #No deal
-		@cart2[:watermelons] = @cart1[:watermelons]
+	def watermelon_deals #Watermelon is doubled priced on Sundays
+		if @date.strftime("%A") == "Sunday"
+			@cart2[:watermelons] = @cart1[:watermelons] * 2
+		else	
+			@cart2[:watermelons] = @cart1[:watermelons]
+		end
 	end
 end
 
