@@ -1,5 +1,6 @@
 require 'pry'
 require 'colorize'
+
 # @shop_products = {item, price} Hash with all avalaible items
 # @cart1 = {item, sum of item in cart} - Hash
 # @cart2 = {item, sum of item to pay with deal aplied} - Hash  
@@ -110,8 +111,10 @@ class ShoppingCart
 end
 
 class Shop
-	attr_accessor :shop_products, :apple_deals
+	attr_accessor :shop_products
 	def initialize
+		@date = Time.now
+		#Initial Fare - Iteration 1
 		@shop_products = {
 			apples: 10,
 			oranges: 5,
@@ -119,15 +122,66 @@ class Shop
 			bananas: 20,
 			watermelons: 50
 		}	
-	end	
 
+		#Season Fares - Iteration 3
+		@spring_products = {
+			apples: 10,
+			oranges: 5,
+			grapes: 15,
+			bananas: 20,
+			watermelons: 50
+		}
+
+		@summer_products = {
+			apples: 10,
+			oranges: 2,
+			grapes: 15,
+			bananas: 20,
+			watermelons: 50
+		}
+
+		@autumm_products = {
+			apples: 15,
+			oranges: 5,
+			grapes: 15,
+			bananas: 20,
+			watermelons: 50
+		}
+
+		@winter_products = {
+			apples: 12,
+			oranges: 5,
+			grapes: 15,
+			bananas: 21,
+			watermelons: 50
+		}
+		
+	end
+
+			
+	def time
+			
+			if @date.month <= 3 && @date.day <= 21 || @date.month >= 12 && @date.day >=21
+				@winter_products
+
+			elsif @date.month <= 6 && @date.day <= 21
+				@spring_products
+
+			elsif @date.month <= 9 && @date.day <= 23
+				@summer_products
+
+			else
+				@autumm_products
+
+			end
+	end
+ 
 end
 
 
 shop1 = Shop.new
-shop1.shop_products
 
-cart = ShoppingCart.new(shop1.shop_products)
+cart = ShoppingCart.new(shop1.time)
 
 cart.add_item_to_cart :apples
 cart.add_item_to_cart :oranges
